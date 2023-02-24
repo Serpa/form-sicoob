@@ -9,18 +9,42 @@ import { Input, Space } from "antd";
 export default function GetData() {
   const { enqueueSnackbar } = useSnackbar();
   const [doc, setDoc] = useState();
+  const [doc2, setDoc2] = useState();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({});
 
   const handleMongo = async () => {
     setLoading(true);
+    const clientes = doc.map((cliente) => {
+      let adms = doc2.filter(
+        (adm) => adm.numeroCPF_CNPJ === cliente.numeroCPF_CNPJ
+      );
+      if (adms.length > 0) {
+        return {
+          nomeCliente: cliente.nomeCliente,
+          nomeGerente: cliente.nomeGerente,
+          idade: parseInt(cliente.idade),
+          numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
+          numeroPA: parseInt(cliente.numeroPA),
+          Administradores: adms,
+        };
+      }
+      return {
+        nomeCliente: cliente.nomeCliente,
+        nomeGerente: cliente.nomeGerente,
+        idade: parseInt(cliente.idade),
+        numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
+        numeroPA: parseInt(cliente.numeroPA),
+      };
+    });
     try {
       const res = await axios.post(`/api/clientes`, {
         assembleia: {
           nome: form.assembleia,
           data: new Date(),
         },
-        clientes: doc,
+        clientes: clientes,
+        adms: doc2
       });
       const result = res.data;
       console.log(result);
@@ -50,8 +74,16 @@ export default function GetData() {
       ],
       range: 1,
     });
-    console.log(ws);
+    var ws2 = XLSX.utils.sheet_to_json(
+      workbook.Sheets[workbook.SheetNames[1]],
+      {
+        raw: false,
+        header: ["numeroCPF_CNPJ", "nomeCliente", "nomeAdm", "descricao"],
+        range: 1,
+      }
+    );
     setDoc(ws);
+    setDoc2(ws2);
   };
   const handleXls = () => {
     const worksheet = XLSX.utils.json_to_sheet(doc);

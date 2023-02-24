@@ -16,4 +16,5 @@ set port=27017
 start cmd /k mongod --dbpath C:\data\db --logpath C:\data\log\mongo.log --replSet rs0
 start cmd /k mongod --dbpath C:\data\db2 --logpath C:\data\log2\mongo.log --port 27018 --replSet rs0
 start cmd /k mongod --dbpath C:\data\db3 --logpath C:\data\log3\mongo.log --port 27019 --replSet rs0
+cd %~dp0
 start cmd /k node server.js

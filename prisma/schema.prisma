@@ -15,15 +15,24 @@ model Assembleia {
 }
 
 model Clientes {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  foto           String?
-  hora           DateTime?   @db.Date
-  nomeCliente    String
-  nomeGerente    String
-  idade          Int
-  numeroCPF_CNPJ String
-  numeroPA       Int
-  presente       Boolean?
-  assembleiaId   String?     @db.ObjectId
-  Assembleia     Assembleia? @relation(fields: [assembleiaId], references: [id])
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  foto            String?
+  hora            DateTime?         @db.Date
+  nomeCliente     String
+  nomeGerente     String
+  idade           Int
+  numeroCPF_CNPJ  String
+  numeroPA        Int
+  presente        Boolean?
+  assembleiaId    String?           @db.ObjectId
+  Assembleia      Assembleia?       @relation(fields: [assembleiaId], references: [id])
+  Administradores Administradores[]
+}
+
+model Administradores {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  nomeAdm   String
+  descricao String
+  clienteId String?   @db.ObjectId
+  Clientes  Clientes? @relation(fields: [clienteId], references: [id])
 }
