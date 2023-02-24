@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Assembleia {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  nome     String?
+  data     DateTime?  @db.Date
+  clientes Clientes[]
+}
+
+model Clientes {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  foto           String?
+  hora           DateTime?   @db.Date
+  nomeCliente    String
+  nomeGerente    String
+  idade          Int
+  numeroCPF_CNPJ String
+  numeroPA       Int
+  presente       Boolean?
+  assembleiaId   String?     @db.ObjectId
+  Assembleia     Assembleia? @relation(fields: [assembleiaId], references: [id])
+}

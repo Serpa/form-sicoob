@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["components/*"],
+      "@/public/*": ["public/*"],
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "contexts/ClienteContext/index.js", "components/Camera.jsx", "components/GetData.jsx", "src/pages/index.jsx", "src/pages/api/presence.js", "src/pages/doc.jsx", "src/pages/api/register.js", "src/pages/api/clientes.js", "src/pages/api/getClientes/[id].js"],
+  "exclude": ["node_modules"]
+}
