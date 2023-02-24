@@ -22,6 +22,8 @@ export default function Template(props) {
         return router.push("/export"),handleImagem(null);
       case "4":
         return router.push("/doc"),handleImagem(null);
+      case "5":
+        return router.push("/raffle"),handleImagem(null);
       default:
         break;
     }
@@ -44,6 +46,10 @@ export default function Template(props) {
     {
       key: "4",
       label: "Cadastrar Tabela",
+    },
+    {
+      key: "5",
+      label: "Sortear",
     },
   ];
   return (
