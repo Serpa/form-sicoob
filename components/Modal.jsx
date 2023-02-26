@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Select } from "antd";
 import WebcamComp from "./Camera";
 import { ClienteContext } from "contexts/ClienteContext";
 import { SaveOutlined } from "@ant-design/icons";
@@ -16,7 +16,7 @@ export default function RegisterModal(props) {
   };
 
   const handleOk = () => {
-    handleSubmit(props.cliente, assembleia);
+    handleSubmit(props.cliente, assembleia, adm);
     setIsModalOpen(false);
   };
 
@@ -25,6 +25,7 @@ export default function RegisterModal(props) {
   };
 
   const [assembleia, setAssembleia] = useState(null);
+  const [adm, setAdm] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,6 +34,13 @@ export default function RegisterModal(props) {
       setAssembleia(assembleiaStorage);
     }
   }, []);
+
+  let options = props.cliente?.Administradores?.map((adm) => {
+    return {
+      value: adm.id,
+      label: adm.nomeAdm,
+    };
+  });
 
   return (
     <>
@@ -46,10 +54,32 @@ export default function RegisterModal(props) {
         onCancel={handleCancel}
         footer={[]}
       >
+        {props.cliente?.Administradores.length > 0 ? (
+          <div className="flex justify-center items-center m-2">
+            <Select
+              showSearch
+              onChange={(value, label) => {
+                setAdm(label.label);
+              }}
+              style={{ width: "100%" }}
+              placeholder="Search to Select"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "").includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? "").toLowerCase())
+              }
+              options={options}
+            />
+          </div>
+        ) : null}
         <div className="mx-auto max-w-lg text-center flex justify-center items-center">
           <WebcamComp />
         </div>
-        {img ? (
+        {img && adm ? (
           <div className="mx-auto max-w-lg text-center flex justify-center items-center pt-2">
             <Button
               key="submit"

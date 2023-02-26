@@ -47,7 +47,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Template menu={"1"}>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center m-2">
           <Select
             showSearch
             onChange={(value, label) => {
@@ -58,7 +58,6 @@ export default function Home() {
             }}
             defaultValue={() => {
               if (typeof window !== "undefined") {
-                // Perform localStorage action
                 const item = localStorage.getItem("assembleia");
                 return JSON.parse(item);
               }

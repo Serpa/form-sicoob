@@ -24,6 +24,7 @@ model Clientes {
   numeroCPF_CNPJ  String
   numeroPA        Int
   presente        Boolean?
+  nomeAdm         String?
   assembleiaId    String?           @db.ObjectId
   Assembleia      Assembleia?       @relation(fields: [assembleiaId], references: [id])
   Administradores Administradores[]

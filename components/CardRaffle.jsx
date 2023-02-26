@@ -25,6 +25,7 @@ export default function CardRaffle(props) {
     setGanhador(null);
     setLoading(true);
     const result = await axios.post("/api/raffle", props.assembleia?.value);
+    console.log(result);
     setTimeout(() => {
       setGanhador(result.data[0]);
       setLoading(false);
@@ -87,10 +88,7 @@ export default function CardRaffle(props) {
               ></Image>
             }
           >
-            <Meta
-              title={ganhador.nomeCliente}
-              description={ganhador.nomeGerente}
-            />
+            <Meta title={ganhador.nomeCliente} description={ganhador.nomeAdm} />
           </Card>
         ) : null}
       </div>

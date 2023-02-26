@@ -5,6 +5,9 @@ export default async function GetClientes(req, res) {
     const result = await prisma.clientes.findMany({
         where: {
             assembleiaId: id
+        },
+        include: {
+            Administradores: true
         }
     })
     res.status(200).json(result)

@@ -29,10 +29,10 @@ export default function ClienteTable(props) {
 
   const handleCancelPresence = async (record) => {
     const cancel = await axios.post("/api/cancel", record);
-    if(cancel.status===200){
-      enqueueSnackbar('Presença retirada com sucesso!', { variant: 'success' })
-    }else{
-      enqueueSnackbar('Erro ao retirar presença!', { variant: 'error' })
+    if (cancel.status === 200) {
+      enqueueSnackbar("Presença retirada com sucesso!", { variant: "success" });
+    } else {
+      enqueueSnackbar("Erro ao retirar presença!", { variant: "error" });
     }
   };
 
@@ -231,7 +231,7 @@ export default function ClienteTable(props) {
               title={record.nomeCliente}
               description={"Você deseja remover a presença?"}
               onConfirm={() => handleCancelPresence(record)}
-              okType = 'default'
+              okType="default"
               okText="Sim"
               cancelText="Não"
             >

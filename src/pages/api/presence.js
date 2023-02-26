@@ -17,7 +17,8 @@ export default async function PresenceAPI(req, res) {
         data: {
             presente: true,
             hora: new Date(),
-            foto: req.body.foto
+            foto: req.body.foto,
+            nomeAdm: req.body.nomeAdm,
         },
     })
     console.log(result);
