@@ -11,6 +11,7 @@ import useSWR from "swr";
 import RegisterModal from "@/components/Modal";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { saveAs } from "file-saver";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function ClienteTable(props) {
@@ -58,6 +59,14 @@ export default function ClienteTable(props) {
   };
 
   const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDownload = () => {
+    saveAs(
+      cliente.foto?.replace("./public", ""),
+      cliente.nomeCliente + ".jpeg"
+    );
     setIsModalOpen(false);
   };
   const getColumnSearchProps = (dataIndex) => ({
@@ -273,6 +282,9 @@ export default function ClienteTable(props) {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
+          <Button key="download" onClick={handleDownload}>
+            Download
+          </Button>,
           <Button key="back" onClick={handleCancel}>
             Voltar
           </Button>,
