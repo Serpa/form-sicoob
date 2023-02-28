@@ -26,6 +26,8 @@ export default function Template(props) {
         return router.push("/raffle"),handleImagem(null);
       case "6":
         return router.push("/adm"),handleImagem(null);
+      case "7":
+        return router.push("/birthday"),handleImagem(null);
       default:
         break;
     }
@@ -56,6 +58,10 @@ export default function Template(props) {
     {
       key: "6",
       label: "Cadastrar Adm. Empresa",
+    },
+    {
+      key: "7",
+      label: "Aniversariantes",
     },
   ];
   return (

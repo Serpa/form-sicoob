@@ -20,8 +20,9 @@ model Clientes {
   hora            DateTime?         @db.Date
   nomeCliente     String
   nomeGerente     String
-  idade           Int
+  idade           Int?
   numeroCPF_CNPJ  String
+  dataNascimento  DateTime?
   numeroPA        Int
   presente        Boolean?
   nomeAdm         String?

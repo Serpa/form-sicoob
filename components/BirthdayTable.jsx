@@ -15,14 +15,14 @@ import { saveAs } from "file-saver";
 import dayjs from "dayjs";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export default function ClienteTable(props) {
+export default function BirthdayTable(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [cliente, setCliente] = useState("");
   const searchInput = useRef(null);
   const { data, error, mutate, isLoading } = useSWR(
-    "/api/getClientes/" + props.id,
+    "/api/birthday/" + props.id,
     fetcher,
     {
       refreshInterval: 1500,
@@ -230,7 +230,7 @@ export default function ClienteTable(props) {
         if (record.idade) {
           return record.idade;
         } else {
-          return dayjs(record.dataNascimento).format("DD/MM/YYYY");
+          return dayjs(record.dataNascimento.$date).format("DD/MM/YYYY");
         }
       },
     },
@@ -258,19 +258,7 @@ export default function ClienteTable(props) {
           )}
         </div>
       ),
-    },
-    {
-      title: "Ação",
-      dataIndex: "action",
-      key: "action",
-      align: "center",
-      render: (text, record, index) => (
-        <div className="btn-wrap">
-          {" "}
-          <RegisterModal cliente={record}></RegisterModal>
-        </div>
-      ),
-    },
+    }
   ];
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;

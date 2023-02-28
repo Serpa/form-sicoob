@@ -5,6 +5,7 @@ import { Button } from "antd";
 import { useSnackbar } from "notistack";
 import { CommentOutlined } from "@ant-design/icons/";
 import { Input, Space } from "antd";
+import dayjs from "dayjs";
 
 export default function GetData() {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +24,7 @@ export default function GetData() {
         return {
           nomeCliente: cliente.nomeCliente,
           nomeGerente: cliente.nomeGerente,
-          idade: parseInt(cliente.idade),
+          dataNascimento: cliente.dataNascimento,
           numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
           numeroPA: parseInt(cliente.numeroPA),
           Administradores: adms,
@@ -32,7 +33,7 @@ export default function GetData() {
       return {
         nomeCliente: cliente.nomeCliente,
         nomeGerente: cliente.nomeGerente,
-        idade: parseInt(cliente.idade),
+        dataNascimento: cliente.dataNascimento,
         numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
         numeroPA: parseInt(cliente.numeroPA),
       };
@@ -44,7 +45,7 @@ export default function GetData() {
           data: new Date(),
         },
         clientes: clientes,
-        adms: doc2
+        adms: doc2,
       });
       const result = res.data;
       console.log(result);
@@ -70,10 +71,13 @@ export default function GetData() {
         "nomeCliente",
         "numeroCPF_CNPJ",
         "nomeGerente",
-        "idade",
+        "dataNascimento",
       ],
       range: 1,
     });
+    console.log(dayjs("2018-08-08"));
+    console.log(ws[0].dataNascimento);
+    console.log(dayjs(ws[0].dataNascimento).format("DD/MM/YYYY"));
     var ws2 = XLSX.utils.sheet_to_json(
       workbook.Sheets[workbook.SheetNames[1]],
       {

@@ -1,4 +1,5 @@
 import prisma from '../../../lib/prisma'
+import dayjs from "dayjs";
 
 export const config = {
     api: {
@@ -18,7 +19,7 @@ export default async function ClientesAPI(req, res) {
             return {
                 nomeCliente: cliente.nomeCliente,
                 nomeGerente: cliente.nomeGerente,
-                idade: parseInt(cliente.idade),
+                dataNascimento: dayjs(cliente.dataNascimento).toDate(),
                 numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
                 numeroPA: parseInt(cliente.numeroPA),
                 assembleiaId: assembleiaCreate.id,
