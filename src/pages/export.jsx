@@ -17,6 +17,7 @@ export default function Doc() {
     dataUpdate = dataUpdate.map(({ foto, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ id, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ assembleiaId, ...rest }) => rest);
+    dataUpdate = dataUpdate.map(({ Administradores, ...rest }) => rest);
     const worksheet = XLSX.utils.json_to_sheet(dataUpdate);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");

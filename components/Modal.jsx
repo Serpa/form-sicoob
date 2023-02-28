@@ -79,7 +79,7 @@ export default function RegisterModal(props) {
         <div className="mx-auto max-w-lg text-center flex justify-center items-center">
           <WebcamComp />
         </div>
-        {img && adm ? (
+        {img ? (
           <div className="mx-auto max-w-lg text-center flex justify-center items-center pt-2">
             <Button
               key="submit"

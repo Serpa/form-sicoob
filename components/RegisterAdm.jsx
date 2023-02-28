@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Button, Select } from "antd";
+import { Button, Select, Form, Input } from "antd";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
@@ -8,6 +8,8 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function RegisterAdm(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [clienteId, setclienteId] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [nomeAdm, setNomeAdm] = useState(null);
   const { data, error, mutate, isLoading } = useSWR(
     "/api/getClientes/" + props.id,
     fetcher,
@@ -17,7 +19,9 @@ export default function RegisterAdm(props) {
   );
 
   const handleRegisterAdm = async () => {
-    const cancel = await axios.post("/api/register_adm", clienteId);
+    const adm = { clienteId, desc, nomeAdm };
+    console.log(adm);
+    const cancel = await axios.post("/api/register_adm", adm);
     if (cancel.status === 200) {
       enqueueSnackbar("Administrador cadastrado com sucesso!", {
         variant: "success",
@@ -57,7 +61,37 @@ export default function RegisterAdm(props) {
           }
           options={options}
         />
-        <Button className="m-2"  disabled={!clienteId}>
+        <Form.Item
+          className="m-2"
+          name="descricao"
+          onChange={(e) => setNomeAdm(e.target.value)}
+          rules={[
+            {
+              required: true,
+              message: "Preencha o Nome do Administrador",
+            },
+          ]}
+        >
+          <Input placeholder="Nome do Administrador" />
+        </Form.Item>
+        <Form.Item
+          className="m-2"
+          name="descricao"
+          onChange={(e) => setDesc(e.target.value)}
+          rules={[
+            {
+              required: true,
+              message: "Preencha a descrição do Administrador",
+            },
+          ]}
+        >
+          <Input placeholder="Descrição do Administrador" />
+        </Form.Item>
+        <Button
+          className="m-2"
+          disabled={!clienteId}
+          onClick={handleRegisterAdm}
+        >
           Salvar
         </Button>
       </div>
