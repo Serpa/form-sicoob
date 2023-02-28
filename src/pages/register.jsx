@@ -70,7 +70,7 @@ export default function Register() {
                 span: 16,
               }}
               style={{
-                maxWidth: 600,
+                minWidth: 500,
               }}
               initialValues={{
                 remember: true,
@@ -137,6 +137,30 @@ export default function Register() {
                   {
                     required: true,
                     message: "Preencha o nome do Gerente",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Nome Administrador"
+                name="nomeAdm"
+                rules={[
+                  {
+                    message: "Preencha o nome do Administrador",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Descrição Administrador"
+                name="descricao"
+                rules={[
+                  {
+                    message: "Preencha a descrição do Administrador",
                   },
                 ]}
               >

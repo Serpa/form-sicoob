@@ -24,6 +24,8 @@ export default function Template(props) {
         return router.push("/doc"),handleImagem(null);
       case "5":
         return router.push("/raffle"),handleImagem(null);
+      case "6":
+        return router.push("/adm"),handleImagem(null);
       default:
         break;
     }
@@ -50,6 +52,10 @@ export default function Template(props) {
     {
       key: "5",
       label: "Sortear",
+    },
+    {
+      key: "6",
+      label: "Cadastrar Adm. Empresa",
     },
   ];
   return (
