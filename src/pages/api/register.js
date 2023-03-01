@@ -1,5 +1,6 @@
 
 import prisma from '../../../lib/prisma'
+import dayjs, { Dayjs } from "dayjs";
 
 export const config = {
     api: {
@@ -10,12 +11,12 @@ export const config = {
 }
 
 export default async function Register(req, res) {
-    let { numeroPA, nomeCliente, numeroCPF_CNPJ, idade, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao } = req.body
+    let { numeroPA, nomeCliente, numeroCPF_CNPJ, dataNascimento, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao } = req.body
     numeroPA = parseInt(numeroPA)
-    idade = parseInt(idade)
+    dataNascimento = new Date(dataNascimento);
     const result = await prisma.clientes.create({
         data: {
-            numeroPA, nomeCliente, numeroCPF_CNPJ, nomeGerente, foto, presente, hora, idade, assembleiaId, nomeAdm
+            numeroPA, nomeCliente, numeroCPF_CNPJ, nomeGerente, foto, presente, hora, dataNascimento, assembleiaId, nomeAdm
         }
     })
     if (nomeAdm) {

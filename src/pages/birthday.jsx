@@ -1,4 +1,3 @@
-
 import Template from "../../components/Template";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -24,16 +23,7 @@ export default function doc() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Template menu={"7"}>
-        <div
-          style={{
-            padding: 24,
-            minHeight: 360,
-            background: "#fffff",
-          }}
-          className="flex justify-center items-center flex-col"
-        >
           <BirthdayTable id={assembleia?.value} />
-        </div>
       </Template>
     </>
   );

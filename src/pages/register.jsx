@@ -2,13 +2,15 @@ import WebcamComp from "components/Camera";
 import { useContext, useEffect } from "react";
 import { ClienteContext } from "contexts/ClienteContext";
 import Template from "@/components/Template";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, DatePicker } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import { Select } from "antd";
 import { useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import Head from "next/head";
+import dayjs from "dayjs";
+
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Register() {
@@ -36,6 +38,7 @@ export default function Register() {
     };
   });
   const onFinish = (values) => {
+    values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD")
     handleRegister(values, assembleia);
   };
   const onFinishFailed = (errorInfo) => {
@@ -118,16 +121,21 @@ export default function Register() {
               </Form.Item>
 
               <Form.Item
-                label="Idade"
-                name="idade"
+                style={{
+                  minWidth: 500,
+                }}
+                label="Data de Nascimento"
+                name="dataNascimento"
                 rules={[
                   {
                     required: true,
-                    message: "Preencha a Idade",
+                    message: "Preencha a data de Nascimento",
                   },
                 ]}
               >
-                <Input />
+                <Input type="date" onChange={(e)=>{
+                  
+                }}/>
               </Form.Item>
 
               <Form.Item
