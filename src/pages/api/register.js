@@ -12,7 +12,11 @@ export const config = {
 
 export default async function Register(req, res) {
     let { numeroPA, nomeCliente, numeroCPF_CNPJ, dataNascimento, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao } = req.body
-    numeroPA = parseInt(numeroPA)
+    if (numeroPA) {
+        numeroPA = parseInt(numeroPA)
+    } else {
+        numeroPA = null
+    }
     dataNascimento = new Date(dataNascimento);
     const result = await prisma.clientes.create({
         data: {

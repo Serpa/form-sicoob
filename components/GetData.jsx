@@ -24,7 +24,7 @@ export default function GetData() {
         return {
           nomeCliente: cliente.nomeCliente,
           nomeGerente: cliente.nomeGerente,
-          dataNascimento: cliente.dataNascimento,
+          dataNascimento: dayjs(cliente.dataNascimento).toISOString(),
           numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
           numeroPA: parseInt(cliente.numeroPA),
           Administradores: adms,
@@ -33,7 +33,7 @@ export default function GetData() {
       return {
         nomeCliente: cliente.nomeCliente,
         nomeGerente: cliente.nomeGerente,
-        dataNascimento: cliente.dataNascimento,
+        dataNascimento: dayjs(cliente.dataNascimento).toISOString(),
         numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
         numeroPA: parseInt(cliente.numeroPA),
       };
@@ -62,10 +62,10 @@ export default function GetData() {
     const file = e.target.files[0];
     if (file === undefined) return null;
     const data = await file.arrayBuffer();
-    const workbook = XLSX.read(data);
+    const workbook = XLSX.readFile(data, { cellDates: true });
     console.log(workbook);
     var ws = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {
-      raw: false,
+      raw: true,
       header: [
         "numeroPA",
         "nomeCliente",
@@ -74,10 +74,8 @@ export default function GetData() {
         "dataNascimento",
       ],
       range: 1,
+      dateNF: "DD/MM/YYYY",
     });
-    console.log(dayjs("2018-08-08"));
-    console.log(ws[0].dataNascimento);
-    console.log(dayjs(ws[0].dataNascimento).format("DD/MM/YYYY"));
     var ws2 = XLSX.utils.sheet_to_json(
       workbook.Sheets[workbook.SheetNames[1]],
       {

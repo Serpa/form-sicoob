@@ -86,7 +86,7 @@ export default function Register() {
                 name="numeroPA"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Preencha o Número PA",
                   },
                 ]}
@@ -127,7 +127,7 @@ export default function Register() {
                 name="dataNascimento"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Preencha a data de Nascimento",
                   },
                 ]}
@@ -142,7 +142,7 @@ export default function Register() {
                 name="nomeGerente"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Preencha o nome do Gerente",
                   },
                 ]}

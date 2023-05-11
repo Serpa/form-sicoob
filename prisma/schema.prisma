@@ -19,11 +19,11 @@ model Clientes {
   foto            String?
   hora            DateTime?         @db.Date
   nomeCliente     String
-  nomeGerente     String
+  nomeGerente     String?
   idade           Int?
   numeroCPF_CNPJ  String
   dataNascimento  DateTime?
-  numeroPA        Int
+  numeroPA        Int?
   presente        Boolean?
   nomeAdm         String?
   assembleiaId    String?           @db.ObjectId

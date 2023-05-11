@@ -48,7 +48,7 @@ export default async function ClientesAPI(req, res) {
         const administradoresCreate = await prisma.Administradores.createMany({
             data: adms
         })
-        res.json(administradoresCreate)
+        res.json(clientesCreate,administradoresCreate)
     } catch (error) {
         console.log(error);
         res.json(error)

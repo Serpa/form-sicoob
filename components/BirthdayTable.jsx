@@ -230,7 +230,7 @@ export default function BirthdayTable(props) {
         if (record.idade) {
           return record.idade;
         } else {
-          return dayjs(record.dataNascimento.$date).format("DD/MM/YYYY");
+          return record.dataNascimento.$date;
         }
       },
     },

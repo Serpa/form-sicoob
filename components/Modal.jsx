@@ -10,6 +10,7 @@ export default function RegisterModal(props) {
     useContext(ClienteContext);
 
   const showModal = () => {
+    console.log(props.cliente);
     handleCliente(props.cliente.id);
     handleAddCliente(props.cliente);
     setIsModalOpen(true);

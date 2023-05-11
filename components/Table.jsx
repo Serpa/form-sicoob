@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Input, Space, Table, Modal, Popconfirm } from "antd";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import useSWR from "swr";
 import RegisterModal from "@/components/Modal";
@@ -28,6 +28,7 @@ export default function ClienteTable(props) {
       refreshInterval: 1500,
     }
   );
+
 
   const handleCancelPresence = async (record) => {
     const cancel = await axios.post("/api/cancel", record);
@@ -226,11 +227,12 @@ export default function ClienteTable(props) {
       dataIndex: ["dataNascimento", "idade"],
       key: "dataNascimento",
       width: "30%",
+      ...getColumnSearchProps("dataNascimento"),
       render: (text, record) => {
         if (record.idade) {
           return record.idade;
         } else {
-          return dayjs(record.dataNascimento).format("DD/MM/YYYY");
+          return record.dataNascimento;
         }
       },
     },
