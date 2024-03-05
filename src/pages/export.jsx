@@ -12,7 +12,6 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function Doc() {
   const handleXls = async () => {
     const clientes = await axios.get("/api/getClientes/" + idAssembleia);
-    console.log(clientes.data);
     let dataUpdate = clientes.data;
     dataUpdate = dataUpdate.map(({ foto, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ id, ...rest }) => rest);

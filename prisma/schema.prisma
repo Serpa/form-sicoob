@@ -23,10 +23,13 @@ model Clientes {
   idade           Int?
   numeroCPF_CNPJ  String
   dataNascimento  DateTime?
+  contato         String?
   numeroPA        Int?
   presente        Boolean?
   nomeAdm         String?
   assembleiaId    String?           @db.ObjectId
+  sorteado        Boolean?
+  dataSorteio     DateTime?
   Assembleia      Assembleia?       @relation(fields: [assembleiaId], references: [id])
   Administradores Administradores[]
 }

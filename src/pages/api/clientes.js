@@ -23,6 +23,7 @@ export default async function ClientesAPI(req, res) {
                 numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
                 numeroPA: parseInt(cliente.numeroPA),
                 assembleiaId: assembleiaCreate.id,
+                sorteado: false,
             }
 
         })

@@ -1,6 +1,14 @@
 import dayjs from 'dayjs'
 import prisma from '../../../../lib/prisma'
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb'
+        }
+    }
+}
+
 export default async function GetClientes(req, res) {
     const { id } = req.query
     if (id === "undefined") res.status(200).json(null)
@@ -12,7 +20,7 @@ export default async function GetClientes(req, res) {
             Administradores: true
         }
     })
-    const clientes = result.map((cliente)=>{
+    const clientes = result.map((cliente) => {
         cliente.dataNascimento = dayjs(cliente.dataNascimento).format("DD/MM/YYYY")
         return cliente
     })

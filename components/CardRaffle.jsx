@@ -24,8 +24,9 @@ export default function CardRaffle(props) {
   const handleRaffle = async () => {
     setGanhador(null);
     setLoading(true);
-    const result = await axios.post("/api/raffle", {assembleiaId: props.assembleia?.value});
-    console.log(result);
+    const result = await axios.post("/api/raffle", {
+      assembleiaId: props.assembleia?.value,
+    });
     setTimeout(() => {
       setGanhador(result.data[0]);
       setLoading(false);
@@ -49,9 +50,7 @@ export default function CardRaffle(props) {
           style={{ width: 300 }}
           className="flex justify-center items-center flex-col m-2"
         >
-          <h1 className="font-bold">
-            {props.assembleia.label.toUpperCase()}
-          </h1>
+          <h1 className="font-bold">{props.assembleia.label.toUpperCase()}</h1>
         </Card>
         {data > 0 ? (
           <Button

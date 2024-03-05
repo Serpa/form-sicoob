@@ -63,7 +63,6 @@ export default function GetData() {
     if (file === undefined) return null;
     const data = await file.arrayBuffer();
     const workbook = XLSX.readFile(data, { cellDates: true });
-    console.log(workbook);
     var ws = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {
       raw: true,
       header: [

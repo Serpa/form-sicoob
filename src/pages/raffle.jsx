@@ -3,6 +3,7 @@ import Template from "../../components/Template";
 import Head from "next/head";
 import CardRaffle from "../../components/CardRaffle";
 import { useEffect, useState } from "react";
+import RaffleList from "../../components/RaffleList";
 
 export default function doc() {
   const [assembleia, setAssembleia] = useState(null);
@@ -34,6 +35,7 @@ export default function doc() {
         >
           <CardRaffle assembleia={assembleia} />
         </div>
+        <RaffleList assembleia={assembleia} />
       </Template>
     </>
   );

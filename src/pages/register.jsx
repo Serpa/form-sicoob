@@ -9,6 +9,7 @@ import axios from "axios";
 import useSWR from "swr";
 import Head from "next/head";
 import dayjs from "dayjs";
+import { MaskedInput } from "antd-mask-input";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -37,13 +38,16 @@ export default function Register() {
     };
   });
   const onFinish = (values) => {
-    values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD")
+    values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
+    console.log(values);
     handleRegister(values, assembleia);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   const { handleAddCliente, img, handleRegister } = useContext(ClienteContext);
+  const cellphoneMask = "(00)00000-0000";
+  const phoneMask = "(00) 0000-0000";
 
   return (
     <>
@@ -120,6 +124,19 @@ export default function Register() {
               </Form.Item>
 
               <Form.Item
+                label="Contato"
+                name="contato"
+                rules={[
+                  {
+                    required: false,
+                    message: "Preencha o contato do cliente",
+                  },
+                ]}
+              >
+                <MaskedInput mask={cellphoneMask} />
+              </Form.Item>
+
+              <Form.Item
                 style={{
                   minWidth: 500,
                 }}
@@ -132,9 +149,7 @@ export default function Register() {
                   },
                 ]}
               >
-                <Input type="date" onChange={(e)=>{
-                  
-                }}/>
+                <Input type="date" onChange={(e) => {}} />
               </Form.Item>
 
               <Form.Item
