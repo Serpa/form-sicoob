@@ -2,7 +2,7 @@ import prisma from '../../../../lib/prisma'
 
 
 export default async function raffleWinners(req, res) {
-    const { id } = req.query
+    const { id } = await req.query
     const result = await prisma.clientes.findMany({
         where: {
             assembleiaId: id,
@@ -14,4 +14,5 @@ export default async function raffleWinners(req, res) {
         },
     })
     res.status(200).json(result)
+    
 }

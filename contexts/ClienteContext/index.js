@@ -20,13 +20,14 @@ export const ClienteProvider = ({ children }) => {
 
     const handleCliente = (clienteId) => {
         setClientId(clienteId)
+        console.log(clienteId);
     }
 
     const handleSubmit = async (cliente, assembleia, adm = null) => {
         const fileData = { base64: img, fileName: cliente.numeroCPF_CNPJ, assembleia: assembleia.label };
         try {
             const result = await axios.post("api/upload", fileData);
-            const res = await axios.post(`/api/presence`, { id: clienteId, foto: result.data.fileName, nomeAdm: adm });
+            const res = await axios.post(`/api/presence`, { id: cliente.id, foto: result.data.fileName, nomeAdm: adm });
             enqueueSnackbar('Imagem salva com sucesso!', { variant: 'success' })
         } catch (error) {
             enqueueSnackbar('Erro ao salvar a imagem!' + error, { variant: 'error' })
@@ -44,7 +45,6 @@ export const ClienteProvider = ({ children }) => {
                 hora: new Date()
             });
             enqueueSnackbar('Imagem salva com sucesso!', { variant: 'success' })
-            console.log(res);
         } catch (error) {
             enqueueSnackbar('Erro ao salvar a imagem!', { variant: 'error' })
         }

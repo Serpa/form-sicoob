@@ -25,7 +25,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Template menu={"6"}>
-        <RegisterAdm id={assembleia?.value} />
+        {assembleia && <RegisterAdm id={assembleia?.value} />}
+
       </Template>
     </>
   );

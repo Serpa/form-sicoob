@@ -3,11 +3,9 @@ import prisma from '../../../../lib/prisma'
 
 export const config = {
     api: {
-        bodyParser: {
-            sizeLimit: '10mb'
-        }
-    }
-}
+      responseLimit: false,
+    },
+  }
 
 export default async function GetClientes(req, res) {
     const { id } = req.query

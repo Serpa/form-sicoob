@@ -23,10 +23,15 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (!data) localStorage.setItem("assembleia", null);
+      if (localStorage.getItem("assembleia") === 'undefined') localStorage.setItem("assembleia", null);
       const item = localStorage.getItem("assembleia");
-      const assembleiaStorage = JSON.parse(item);
-      setAssembleia(assembleiaStorage);
+      try {
+        if (item !== 'undefined') {
+          setAssembleia(JSON.parse(item));
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }, []);
 
@@ -63,7 +68,7 @@ export default function Home() {
               }
             }}
             style={{ width: "50%" }}
-            placeholder="Search to Select"
+            placeholder="Procure para Selecionar"
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.label ?? "").includes(input)
