@@ -23,7 +23,7 @@ export default function doc() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Template menu={"7"}>
-          <BirthdayTable id={assembleia?.value} />
+        {assembleia && <BirthdayTable id={assembleia?.value} />}
       </Template>
     </>
   );

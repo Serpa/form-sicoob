@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined,LoadingOutlined } from '@ant-design/icons';
 import { Button, Drawer, Form, Input, Select, Space } from 'antd';
 import { useSnackbar } from 'notistack';
+import axios from 'axios';
 const { Option } = Select;
 
 export default function MobileRegisterAdm({ assembleia, clientes }) {
     const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false)
     const showDrawer = () => {
         setOpen(true);
     };
@@ -16,19 +18,21 @@ export default function MobileRegisterAdm({ assembleia, clientes }) {
         form.resetFields();
     };
     const onFinish = async (values) => {
-        const adm = { clienteId, desc, nomeAdm };
-        console.log(adm);
-        const cancel = await axios.post("/api/register_adm", adm);
+        setLoading(true)
+        const cancel = await axios.post("/api/register_adm", values);
         if (cancel.status === 200) {
             form.resetFields();
             enqueueSnackbar("Administrador cadastrado com sucesso!", {
                 variant: "success",
             });
+            setLoading(false)
         } else {
             enqueueSnackbar("Erro ao cadastrar Administrador!", { variant: "error" });
+            setLoading(false)
         }
     };
     const onFinishFailed = (errorInfo) => {
+        setLoading(false)
     };
     let options = clientes.map((cliente) => {
         return {
@@ -65,11 +69,20 @@ export default function MobileRegisterAdm({ assembleia, clientes }) {
                     autoComplete="off"
                     className='max-w-full'
                 >
-                    <Form.Item label="Select">
+                    <Form.Item
+                        label="Usuário"
+                        name="clienteId"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Selecione um usuário",
+                            },
+                        ]}
+                    >
                         <Select
                             showSearch
                             style={{ width: "100%" }}
-                            placeholder="Search to Select"
+                            placeholder="Selecione o usuário"
                             optionFilterProp="children"
                             filterOption={(input, option) =>
                                 (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
@@ -97,7 +110,7 @@ export default function MobileRegisterAdm({ assembleia, clientes }) {
 
                     <Form.Item
                         label="Descrição do Administrador"
-                        name="descricao"
+                        name="desc"
                         rules={[
                             {
                                 required: true,
@@ -107,7 +120,14 @@ export default function MobileRegisterAdm({ assembleia, clientes }) {
                     >
                         <Input />
                     </Form.Item>
-
+                    <Button
+                        className="m-2"
+                        htmlType='submit'
+                        disabled={loading}
+                    >
+                        {loading && <LoadingOutlined />}
+                        Salvar
+                    </Button>
                 </Form>
             </Drawer>
         </>
