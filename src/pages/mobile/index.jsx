@@ -89,7 +89,9 @@ export default function MobileIndex() {
             {loading && <LoadingOutlined />}
             {clientes.length > 0 && <Select
                 showSearch
-                onChange={(value, label) => setSelectedCliente(value)}
+                onChange={(value, label) => {
+                    setSelectedCliente(value)
+                }}
                 // defaultValue={() => {
                 //     if (typeof window !== "undefined") {
                 //         const item = localStorage.getItem("assembleia");
@@ -97,7 +99,8 @@ export default function MobileIndex() {
                 //     }
                 // }}
                 value={selectedCliente}
-                style={{ width: "100%" }}
+                style={{ width: "100%" }
+                }
                 placeholder="Selecione um usuário"
                 optionFilterProp="children"
                 filterOption={(input, option) =>
@@ -110,6 +113,13 @@ export default function MobileIndex() {
                 }
                 options={clientes}
             />}
+            {selectedCliente && (
+                <>
+                    <p className='text-xl font-bold'>Nome: {JSON.parse(selectedCliente).nomeCliente}</p>
+                    <p className='text-xl font-bold'>CPF/CNPJ: {JSON.parse(selectedCliente).numeroCPF_CNPJ}</p>
+                    <p className='text-xl font-bold'>Data de Nascimento: {JSON.parse(selectedCliente).dataNascimento}</p>
+                </>
+            )}
             {selectedCliente && <MobilePresence cliente={JSON.parse(selectedCliente)} />}
             {assembleia && <MobileRegister assembleia={assembleia} />}
             {assembleia && clientes.length > 0 && <MobileRegisterAdm assembleia={assembleia} clientes={clientes.map(cli => (JSON.parse(cli.value)))} />}

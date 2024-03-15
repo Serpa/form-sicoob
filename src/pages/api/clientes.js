@@ -24,6 +24,7 @@ export default async function ClientesAPI(req, res) {
                 numeroPA: parseInt(cliente.numeroPA),
                 assembleiaId: assembleiaCreate.id,
                 sorteado: false,
+                associado: true,
             }
 
         })
@@ -49,9 +50,9 @@ export default async function ClientesAPI(req, res) {
         const administradoresCreate = await prisma.Administradores.createMany({
             data: adms
         })
-        res.json(clientesCreate,administradoresCreate)
+        return res.json(clientesCreate, administradoresCreate, { status: 200 })
     } catch (error) {
         console.log(error);
-        res.json(error)
+        return res.json(error, { status: 500 })
     }
 }

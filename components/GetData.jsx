@@ -47,10 +47,13 @@ export default function GetData() {
         clientes: clientes,
         adms: doc2,
       });
-      const result = res.data;
-      console.log(result);
-      enqueueSnackbar("Documento salvo com sucesso!", { variant: "success" });
-      setLoading(false);
+      if (res.status === 200) {
+        enqueueSnackbar("Documento salvo com sucesso!", { variant: "success" });
+        setLoading(false);
+      } else {
+        enqueueSnackbar("Erro ao salvar documento!", { variant: "error" });
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
       enqueueSnackbar("Erro ao salvar documento!", { variant: "error" });

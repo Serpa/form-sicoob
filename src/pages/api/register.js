@@ -21,7 +21,18 @@ export default async function Register(req, res) {
     dataNascimento = new Date(dataNascimento);
     const result = await prisma.clientes.create({
         data: {
-            numeroPA, nomeCliente: nomeCliente.toUpperCase(), numeroCPF_CNPJ, nomeGerente: nomeGerente.toUpperCase(), foto, presente, hora, dataNascimento, assembleiaId, nomeAdm, contato, sorteado: false
+            numeroPA,
+            nomeCliente: nomeCliente ? nomeCliente.toUpperCase() : '',
+            numeroCPF_CNPJ,
+            nomeGerente: nomeGerente ? nomeGerente.toUpperCase() : '',
+            foto,
+            presente,
+            hora,
+            dataNascimento,
+            assembleiaId,
+            nomeAdm,
+            contato,
+            sorteado: false
         }
     })
 

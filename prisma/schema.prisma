@@ -19,19 +19,20 @@ model Clientes {
   foto            String?
   hora            DateTime?         @db.Date
   nomeCliente     String
-  nomeGerente     String?
+  nomeGerente     String
   idade           Int?
   numeroCPF_CNPJ  String
   dataNascimento  DateTime?
-  contato         String?
-  numeroPA        Int?
+  numeroPA        Int
+  associado       Boolean           @default(false)
   presente        Boolean?
+  sorteado        Boolean?
+  userId          String?           @db.ObjectId
   nomeAdm         String?
   assembleiaId    String?           @db.ObjectId
-  sorteado        Boolean?
-  dataSorteio     DateTime?
   Assembleia      Assembleia?       @relation(fields: [assembleiaId], references: [id])
   Administradores Administradores[]
+  User            User?             @relation(fields: [userId], references: [id])
 }
 
 model Administradores {
@@ -40,4 +41,12 @@ model Administradores {
   descricao String
   clienteId String?   @db.ObjectId
   Clientes  Clientes? @relation(fields: [clienteId], references: [id])
+}
+
+model User {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String     @unique
+  password String
+  Clientes Clientes[]
 }
