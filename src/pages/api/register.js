@@ -14,7 +14,6 @@ export const config = {
 
 export default async function Register(req, res) {
     const data = await getServerSession(req, res, authOptions);
-    console.log(data);
     let { numeroPA, nomeCliente, numeroCPF_CNPJ, dataNascimento, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao, contato, associado } = await req.body
 
     if (numeroPA) {

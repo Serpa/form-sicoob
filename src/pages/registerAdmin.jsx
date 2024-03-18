@@ -1,21 +1,30 @@
 import Template from "@/components/Template";
-import { Button, Form, Input } from "antd";
+import { Button, Card, Form, Input, Select } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import axios from "axios";
+import useSWR from "swr";
+import { useSession } from "next-auth/react"
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function RegisterAdmin() {
+  const session = useSession()
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm();
+  const [form2] = Form.useForm();
+  const { data, error, mutate, isLoading } = useSWR(
+    "/api/getUsers",
+    fetcher
+  );
 
   const onFinish = async (values) => {
     setLoading(true)
     try {
       const registerUserAdmin = await axios.post('/api/registerAdmin', values)
-      console.log(registerUserAdmin);
       if (registerUserAdmin.status === 200)
         form.resetFields()
       enqueueSnackbar('Usuário cadastrado com sucesso!', { variant: 'success' })
@@ -25,10 +34,34 @@ export default function RegisterAdmin() {
       setLoading(false)
     }
   };
+
+  const onFinish2 = async (values) => {
+    if (!values.id || !values.password) return null
+    setLoading(true)
+    try {
+      const updateUser = await axios.put('/api/resetPassword', values)
+      if (updateUser.status === 200)
+        form2.resetFields()
+      enqueueSnackbar('Senha alterada com sucesso!', { variant: 'success' })
+      setLoading(false)
+    } catch (error) {
+      enqueueSnackbar('Erro ao alterar!', { variant: 'error' })
+      setLoading(false)
+    }
+  };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+  let options = data?.map((user) => {
+    return {
+      value: user.id,
+      label: user.email,
+    };
+  });
+
+  if (isLoading) return null
+  if (error) return null
   return (
     <>
       <Head>
@@ -39,7 +72,7 @@ export default function RegisterAdmin() {
       </Head>
       <Template menu={"9"}>
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 flex justify-center items-center flex-col space-y-5">
-          <p className="text-2xl">Cadastor de Administrador de Sistema.</p>
+          <p className="text-2xl">Cadastro de Administrador do Sistema.</p>
           <div className="mx-auto max-w-lg text-center flex justify-center items-center">
             <Form
               form={form}
@@ -48,7 +81,7 @@ export default function RegisterAdmin() {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
               style={{
-                minWidth: 500,
+                minWidth: 400,
               }}
             >
 
@@ -103,7 +136,64 @@ export default function RegisterAdmin() {
             </Form>
           </div>
 
-          <div className="grid justify-items-start"></div>
+          {session.status === 'authenticated' && session.data.user?.email === 'serpa419@gmail.com' &&
+            <Card title='Alterar Senha' >
+              <Form
+                form={form2}
+                layout="vertical"
+                onFinish={onFinish2}
+                autoComplete="off"
+                style={{
+                  minWidth: 400,
+                }}
+                className="flex flex-col justify-center"
+              >
+
+                <Form.Item
+                  label="Usuário"
+                  name="id"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Selecione um usuário.",
+                    },
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    style={{ width: "400px" }}
+                    placeholder="Selecione um Usuário"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").includes(input)
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? "")
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? "").toLowerCase())
+                    }
+                    options={options}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  label="Senha"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Preencha a senha do usuário.",
+                      min: 6
+                    },
+                  ]}
+                >
+                  <Input type="password" />
+                </Form.Item>
+
+                <Button htmlType="submit" loading={loading}>Resetar Senha</Button>
+              </Form>
+            </Card>
+          }
         </div>
       </Template>
     </>

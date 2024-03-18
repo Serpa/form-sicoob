@@ -22,6 +22,7 @@ export default function CardRaffle(props) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const handleRaffle = async () => {
     setGanhador(null);
     setLoading(true);
@@ -29,6 +30,7 @@ export default function CardRaffle(props) {
       assembleiaId: props.assembleia?.value,
       associado: associado
     });
+
     setTimeout(() => {
       setGanhador(result.data[0]);
       setLoading(false);

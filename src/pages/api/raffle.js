@@ -14,6 +14,18 @@ export default async function Raffle(req, res) {
                 { $sample: { size: 1 } }
             ],
         })
+        if (result.length) {
+            const updateRaffle = await prisma.clientes.update({
+                where: {
+                    id: result[0]._id.$oid,
+                },
+                data: {
+                    sorteado: true,
+                    dataSorteio: new Date()
+                },
+            })
+        }
+        return res.status(200).json(result)
     } else {
         const result = await prisma.clientes.aggregateRaw({
             pipeline: [
@@ -27,17 +39,17 @@ export default async function Raffle(req, res) {
                 { $sample: { size: 1 } }
             ],
         })
+        if (result.length) {
+            const updateRaffle = await prisma.clientes.update({
+                where: {
+                    id: result[0]._id.$oid,
+                },
+                data: {
+                    sorteado: true,
+                    dataSorteio: new Date()
+                },
+            })
+        }
+        return res.status(200).json(result)
     }
-    if (result.length) {
-        const updateRaffle = await prisma.clientes.update({
-            where: {
-                id: result[0]._id.$oid,
-            },
-            data: {
-                sorteado: true,
-                dataSorteio: new Date()
-            },
-        })
-    }
-    return res.status(200).json(result)
 }
