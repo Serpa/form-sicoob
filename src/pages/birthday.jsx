@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import BirthdayTable from "../../components/BirthdayTable";
 
-export default function doc() {
+export default function Birthday() {
   const [assembleia, setAssembleia] = useState(null);
 
   useEffect(() => {

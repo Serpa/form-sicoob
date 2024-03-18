@@ -13,11 +13,26 @@ export default function Doc() {
   const handleXls = async () => {
     const clientes = await axios.get("/api/getClientes/" + idAssembleia);
     let dataUpdate = clientes.data;
+    console.log(clientes.data);
+    const dataXLS = clientes.data.map((cli) => {
+      return {
+        numeroPA: cli.numeroPA,
+        associado: cli.associado,
+        nomeCliente: cli.nomeCliente,
+        nomeAdm: cli.nomeAdm,
+        CPF_CNPJ: cli.numeroCPF_CNPJ,
+        dataNascimento: cli.dataNascimento,
+        presente: cli.presente,
+        sorteado: cli.sorteado,
+        responsavelPresenca: cli.User?.name ?? '',
+        horaPresenca: cli.hora,
+      }
+    })
     dataUpdate = dataUpdate.map(({ foto, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ id, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ assembleiaId, ...rest }) => rest);
     dataUpdate = dataUpdate.map(({ Administradores, ...rest }) => rest);
-    const worksheet = XLSX.utils.json_to_sheet(dataUpdate);
+    const worksheet = XLSX.utils.json_to_sheet(dataXLS);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
     XLSX.writeFile(workbook, "Output.xlsx", { compression: true });

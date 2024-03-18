@@ -22,11 +22,13 @@ model Clientes {
   nomeGerente     String
   idade           Int?
   numeroCPF_CNPJ  String
+  contato         String?
   dataNascimento  DateTime?
-  numeroPA        Int
+  numeroPA        Int?
   associado       Boolean           @default(false)
   presente        Boolean?
   sorteado        Boolean?
+  dataSorteio     DateTime?
   userId          String?           @db.ObjectId
   nomeAdm         String?
   assembleiaId    String?           @db.ObjectId

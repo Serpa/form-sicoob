@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card } from "antd";
+import { Button, Card, Checkbox } from "antd";
 import useSWR from "swr";
 import axios from "axios";
 import { Spin } from "antd";
@@ -13,6 +13,7 @@ export default function CardRaffle(props) {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [ganhador, setGanhador] = useState(null);
+  const [associado, setAssociado] = useState(true);
   const { data, error, isLoading } = useSWR(
     mounted ? "/api/countPresence/" + props.assembleia?.value : null,
     fetcher
@@ -26,6 +27,7 @@ export default function CardRaffle(props) {
     setLoading(true);
     const result = await axios.post("/api/raffle", {
       assembleiaId: props.assembleia?.value,
+      associado: associado
     });
     setTimeout(() => {
       setGanhador(result.data[0]);
@@ -52,17 +54,20 @@ export default function CardRaffle(props) {
         >
           <h1 className="font-bold">{props.assembleia.label.toUpperCase()}</h1>
         </Card>
-        {data > 0 ? (
-          <Button
-            type="default"
-            icon={<SmileOutlined />}
-            loading={loading}
-            size={"large"}
-            onClick={handleRaffle}
-          >
-            Sortear
-          </Button>
-        ) : null}
+        {data > 0 && (
+          <div className="flex flex-col space-y-5">
+            <Button
+              type="default"
+              icon={<SmileOutlined />}
+              loading={loading}
+              size={"large"}
+              onClick={handleRaffle}
+            >
+              Sortear
+            </Button>
+            <Checkbox className="justify-center" checked={associado} onChange={e => setAssociado(e.target.checked)} >Associado</Checkbox>
+          </div>
+        )}
         <Card
           title="Clientes Presentes"
           bordered={false}

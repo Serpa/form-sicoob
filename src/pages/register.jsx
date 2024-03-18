@@ -2,7 +2,7 @@ import WebcamComp from "components/Camera";
 import { useContext, useEffect } from "react";
 import { ClienteContext } from "contexts/ClienteContext";
 import Template from "@/components/Template";
-import { Button, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import axios from "axios";
@@ -85,6 +85,16 @@ export default function Register() {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
+
+              <Form.Item
+                label="Status"
+                name="associado"
+                valuePropName="checked"
+
+              >
+                <Checkbox className="flex">Associado</Checkbox>
+              </Form.Item>
+
               <Form.Item
                 label="Número PA"
                 name="numeroPA"
@@ -97,6 +107,7 @@ export default function Register() {
               >
                 <Input />
               </Form.Item>
+
               <Form.Item
                 label="Nome Cliente"
                 name="nomeCliente"
@@ -149,7 +160,7 @@ export default function Register() {
                   },
                 ]}
               >
-                <Input type="date" onChange={(e) => {}} />
+                <Input type="date" onChange={(e) => { }} />
               </Form.Item>
 
               <Form.Item
@@ -190,10 +201,6 @@ export default function Register() {
               </Form.Item>
 
               <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
               >
                 {img ? (
                   <Button type="text" htmlType="submit" icon={<SaveOutlined />}>

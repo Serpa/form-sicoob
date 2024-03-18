@@ -30,6 +30,10 @@ export default function Template(props) {
         return router.push("/adm"), handleImagem(null);
       case "7":
         return router.push("/birthday"), handleImagem(null);
+      case "8":
+        return router.push("/mobile"), handleImagem(null);
+      case "9":
+        return router.push("/registerAdmin"), handleImagem(null);
       default:
         break;
     }
@@ -65,6 +69,14 @@ export default function Template(props) {
       key: "7",
       label: "Aniversariantes",
     },
+    {
+      key: "8",
+      label: "Mobile",
+    },
+    {
+      key: "9",
+      label: "Cadastro Administrador",
+    },
   ];
   return (
     <Layout>
@@ -90,10 +102,10 @@ export default function Template(props) {
         <Header
           className="flex justify-end items-center p-0 gap-2"
         >
-          {session.status==='authenticated' &&
+          {session.status === 'authenticated' &&
             <>
               <p className="font-bold text-white">{session.data?.user.name}</p>
-              <Button className="bg-gray-400 text-black hover:bg-slate-500 border-black">Sair</Button>
+              <Button className="bg-gray-400 text-black hover:bg-slate-500 border-black" onClick={signOut}>Sair</Button>
             </>
           }
         </Header>

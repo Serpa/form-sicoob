@@ -1,4 +1,6 @@
 
+import { getServerSession } from 'next-auth';
+import { authOptions } from "../api/auth/[...nextauth]";
 import prisma from '../../../lib/prisma'
 import dayjs, { Dayjs } from "dayjs";
 
@@ -11,7 +13,9 @@ export const config = {
 }
 
 export default async function Register(req, res) {
-    let { numeroPA, nomeCliente, numeroCPF_CNPJ, dataNascimento, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao, contato } = await req.body
+    const data = await getServerSession(req, res, authOptions);
+    console.log(data);
+    let { numeroPA, nomeCliente, numeroCPF_CNPJ, dataNascimento, nomeGerente, foto, presente, hora, assembleiaId, nomeAdm, descricao, contato, associado } = await req.body
 
     if (numeroPA) {
         numeroPA = parseInt(numeroPA)
@@ -32,7 +36,9 @@ export default async function Register(req, res) {
             assembleiaId,
             nomeAdm,
             contato,
-            sorteado: false
+            sorteado: false,
+            associado,
+            userId: data.user.id
         }
     })
 

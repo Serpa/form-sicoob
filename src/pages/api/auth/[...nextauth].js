@@ -38,45 +38,25 @@ export const authOptions = {
         })
     ],
     callbacks: {
-        async session({ session, user, token }) {
-            session.user = token.user;
-            return session
+        jwt: ({ token, user }) => {
+            // console.log('JWT Callback', { token })
+            if (user) {
+                const u = user
+                return {
+                    ...token,
+                    ...user
+                }
+            }
+            return token
         },
-        async jwt({ token, trigger, user, account, session }) {
-            if (trigger === "update" && session?.name) {
-                token.user = session
-            }
-            if (typeof user !== typeof undefined) {
-                token.user = user;
-            }
-            return token;
-        }
-    },
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: true
-            }
-        },
-        callbackUrl: {
-            name: `next-auth.callback-url`,
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: true
-            }
-        },
-        csrfToken: {
-            name: `next-auth.csrf-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: true
+        session: ({ session, token }) => {
+            // console.log('Session Callback', { token })
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id
+                }
             }
         },
     }

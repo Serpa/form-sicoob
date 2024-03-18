@@ -17,4 +17,4 @@ export default withAuth(
     }
 
 );
-export const config = { matcher: ["/", "/mobile", "/register", "/export", "/doc", "/raffle", "/birthday", "/adm"] };
+export const config = { matcher: ["/", "/mobile", "/register", "/export", "/doc", "/raffle", "/birthday", "/adm", "/registerAdmin"] };

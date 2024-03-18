@@ -2,7 +2,7 @@ import GetData from "components/GetData";
 import Template from "../../components/Template";
 import Head from "next/head";
 
-export default function doc() {
+export default function Doc() {
   return (
     <>
       <Head>

@@ -23,12 +23,10 @@ export default function ClienteTable(props) {
   const searchInput = useRef(null);
   const { data, error, mutate, isLoading } = useSWR(
     "/api/getClientes/" + props.id,
-    fetcher,
-    {
-      refreshInterval: 1500,
-    }
+    fetcher, {
+    refreshInterval: 2000
+  }
   );
-
 
   const handleCancelPresence = async (record) => {
     const cancel = await axios.post("/api/cancel", record);
@@ -222,6 +220,15 @@ export default function ClienteTable(props) {
       width: "30%",
       ...getColumnSearchProps("nomeGerente"),
     },
+    // {
+    //   title: "Responsavel",
+    //   dataIndex: "responsavel",
+    //   key: "responsavel",
+    //   width: "30%",
+    //   render: (text, record) => {
+    //     return record.User?.name ? record.User.name : ''
+    //   }
+    // },
     {
       title: "Data de Nascimento",
       dataIndex: ["dataNascimento", "idade"],
@@ -255,6 +262,21 @@ export default function ClienteTable(props) {
             >
               <CheckCircleOutlined style={{ color: "#33ff00" }} />
             </Popconfirm>
+          ) : (
+            <CloseCircleOutlined style={{ color: "#ff0000" }} />
+          )}
+        </div>
+      ),
+    },
+    {
+      title: "Associado",
+      dataIndex: "associado",
+      key: "associado",
+      align: "center",
+      render: (text, record, index) => (
+        <div className="btn-wrap">
+          {record.associado ? (
+            <CheckCircleOutlined style={{ color: "#33ff00" }} />
           ) : (
             <CloseCircleOutlined style={{ color: "#ff0000" }} />
           )}

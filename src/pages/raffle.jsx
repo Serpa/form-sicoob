@@ -5,7 +5,7 @@ import CardRaffle from "../../components/CardRaffle";
 import { useEffect, useState } from "react";
 import RaffleList from "../../components/RaffleList";
 
-export default function doc() {
+export default function Raffle() {
   const [assembleia, setAssembleia] = useState(null);
 
   useEffect(() => {

@@ -3,9 +3,9 @@ import prisma from '../../../../lib/prisma'
 
 export const config = {
     api: {
-      responseLimit: false,
+        responseLimit: false,
     },
-  }
+}
 
 export default async function GetClientes(req, res) {
     const { id } = req.query
@@ -15,7 +15,8 @@ export default async function GetClientes(req, res) {
             assembleiaId: id
         },
         include: {
-            Administradores: true
+            Administradores: true,
+            User: true
         }
     })
     const clientes = result.map((cliente) => {

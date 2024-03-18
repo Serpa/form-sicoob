@@ -81,9 +81,9 @@ export default function Home() {
             options={options}
           />
         </div>
-        {data && assembleia?.value ? (
+        {data && assembleia?.value && (
           <ClienteTable id={assembleia?.value}></ClienteTable>
-        ) : null}
+        )}
       </Template>
     </>
   );

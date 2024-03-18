@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import { Button, Checkbox, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
 import { ClienteContext } from "../contexts/ClienteContext";
 import { SaveOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
@@ -64,6 +64,15 @@ export default function MobileRegister({ assembleia }) {
                     autoComplete="off"
                     className='max-w-full'
                 >
+
+                    <Form.Item
+                        label="Status"
+                        name="associado"
+                        valuePropName="checked"
+
+                    >
+                        <Checkbox className="flex">Associado</Checkbox>
+                    </Form.Item>
 
                     <Form.Item
                         label="Número PA"
