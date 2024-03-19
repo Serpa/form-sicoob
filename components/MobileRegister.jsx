@@ -20,9 +20,14 @@ export default function MobileRegister({ assembleia }) {
     };
     const onFinish = (values) => {
         try {
-            values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
-            handleRegister(values, assembleia);
-            form.resetFields();
+            if (values.dataNascimento) {
+                values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
+                handleRegister(values, assembleia);
+                form.resetFields();
+            } else {
+                handleRegister(values, assembleia);
+                form.resetFields();
+            }
         } catch (error) {
 
         }

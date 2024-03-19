@@ -13,7 +13,6 @@ export default function Doc() {
   const handleXls = async () => {
     const clientes = await axios.get("/api/getClientes/" + idAssembleia);
     let dataUpdate = clientes.data;
-    console.log(clientes.data);
     const dataXLS = clientes.data.map((cli) => {
       return {
         numeroPA: cli.numeroPA,

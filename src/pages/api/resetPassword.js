@@ -14,7 +14,6 @@ export default async function PUT(req, res) {
     if (!session) return res.status(401).json('Não autorizado!')
     try {
         const info = await req.body;
-        console.log(info)
         const passwordHash = await bcrypt.hash(info.password, 10)
         const result = await prisma.user.update({
             where: {
@@ -26,7 +25,6 @@ export default async function PUT(req, res) {
         })
         return res.status(200).json(result)
     } catch (error) {
-        console.log(error)
         return res.status(500).json(error)
     }
 }

@@ -21,7 +21,6 @@ export const ClienteProvider = ({ children }) => {
 
     const handleCliente = (clienteId) => {
         setClientId(clienteId)
-        console.log(clienteId);
     }
 
     const handleSubmit = async (cliente, assembleia, adm = null) => {

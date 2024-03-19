@@ -18,6 +18,5 @@ export default async function RegisterAdm(req, res) {
             clienteId: clienteId
         }
     })
-    console.log(createAdm);
-    res.json(createAdm)
+    return res.json(createAdm)
 }

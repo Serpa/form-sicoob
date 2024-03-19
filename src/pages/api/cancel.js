@@ -13,7 +13,6 @@ export const config = {
 export default async function CancelAPI(req, res) {
     const file = req.body.foto
     fs.stat(file, function (err, stats) {
-        console.log(stats);
 
         if (err) {
             return console.error(err);
@@ -34,6 +33,5 @@ export default async function CancelAPI(req, res) {
             foto: ''
         },
     })
-    console.log(result);
-    res.json(result)
+    return res.json(result)
 }

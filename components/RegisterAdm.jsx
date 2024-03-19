@@ -20,7 +20,6 @@ export default function RegisterAdm(props) {
 
   const handleRegisterAdm = async () => {
     const adm = { clienteId, desc, nomeAdm };
-    console.log(adm);
     const cancel = await axios.post("/api/register_adm", adm);
     if (cancel.status === 200) {
       enqueueSnackbar("Administrador cadastrado com sucesso!", {

@@ -11,7 +11,6 @@ export const config = {
 
 export default async function PresenceAPI(req, res) {
     const user = await req.body
-    console.log(user);
     const result = await prisma.clientes.update({
         where: {
             id: user.id
@@ -23,6 +22,5 @@ export default async function PresenceAPI(req, res) {
             nomeAdm: user.nomeAdm,
         },
     })
-    console.log(result);
-    res.json(result)
+    return res.json(result)
 }

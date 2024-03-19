@@ -52,7 +52,6 @@ export default async function ClientesAPI(req, res) {
         })
         return res.json(clientesCreate, administradoresCreate, { status: 200 })
     } catch (error) {
-        console.log(error);
         return res.json(error, { status: 500 })
     }
 }

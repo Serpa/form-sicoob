@@ -55,7 +55,6 @@ export default function GetData() {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
       enqueueSnackbar("Erro ao salvar documento!", { variant: "error" });
       setLoading(false);
     }

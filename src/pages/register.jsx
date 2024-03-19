@@ -39,7 +39,6 @@ export default function Register() {
   });
   const onFinish = (values) => {
     values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
-    console.log(values);
     handleRegister(values, assembleia);
   };
   const onFinishFailed = (errorInfo) => {
