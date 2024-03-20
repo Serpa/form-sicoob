@@ -71,72 +71,74 @@ export default function RegisterAdmin() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Template menu={"9"}>
-        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 flex justify-center items-center flex-col space-y-5">
-          <p className="text-2xl">Cadastro de Administrador do Sistema.</p>
-          <div className="mx-auto max-w-lg text-center flex justify-center items-center">
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-              style={{
-                minWidth: 400,
-              }}
-            >
+        {session.status === 'authenticated' && session.data.user?.email === 'informatica@sicoobfrutal.com.br' &&
+          <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 flex justify-center items-center flex-col space-y-5">
 
-              <Form.Item
-                label="Nome"
-                name="name"
-                rules={[
-                  {
-                    required: false,
-                    message: "Preencha o nome do usuário.",
-                    min: 3
-                  },
-                ]}
+            <p className="text-2xl">Cadastro de Administrador do Sistema.</p>
+            <div className="mx-auto max-w-lg text-center flex justify-center items-center">
+
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                style={{
+                  minWidth: 400,
+                }}
               >
-                <Input />
-              </Form.Item>
 
-              <Form.Item
-                label="E-mail"
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Preencha o e-mail do usuário.",
-                    type: 'email'
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+                <Form.Item
+                  label="Nome"
+                  name="name"
+                  rules={[
+                    {
+                      required: false,
+                      message: "Preencha o nome do usuário.",
+                      min: 3
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-              <Form.Item
-                label="Senha"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Preencha a senha do usuário.",
-                    min: 6
-                  },
-                ]}
-              >
-                <Input type="password" />
-              </Form.Item>
+                <Form.Item
+                  label="E-mail"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Preencha o e-mail do usuário.",
+                      type: 'email'
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-              <Form.Item
-              >
-                <Button type="text" htmlType="submit" icon={<SaveOutlined />} loading={loading}>
-                  Cadastrar
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
+                <Form.Item
+                  label="Senha"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Preencha a senha do usuário.",
+                      min: 6
+                    },
+                  ]}
+                >
+                  <Input type="password" />
+                </Form.Item>
 
-          {session.status === 'authenticated' && session.data.user?.email === 'serpa419@gmail.com' &&
+                <Form.Item
+                >
+                  <Button type="text" htmlType="submit" icon={<SaveOutlined />} loading={loading}>
+                    Cadastrar
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+
             <Card title='Alterar Senha' >
               <Form
                 form={form2}
@@ -193,8 +195,8 @@ export default function RegisterAdmin() {
                 <Button htmlType="submit" loading={loading}>Resetar Senha</Button>
               </Form>
             </Card>
-          }
-        </div>
+          </div>
+        }
       </Template>
     </>
   );
