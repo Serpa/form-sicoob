@@ -127,7 +127,7 @@ export default function MobileRegister({ assembleia }) {
                         name="contato"
                         rules={[
                             {
-                                required: false,
+                                required: true,
                                 message: "Preencha o contato do cliente",
                             },
                         ]}

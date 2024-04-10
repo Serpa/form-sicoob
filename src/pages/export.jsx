@@ -18,6 +18,7 @@ export default function Doc() {
         numeroPA: cli.numeroPA,
         associado: cli.associado,
         nomeCliente: cli.nomeCliente,
+        contato: cli.contato,
         nomeAdm: cli.nomeAdm,
         CPF_CNPJ: cli.numeroCPF_CNPJ,
         dataNascimento: cli.dataNascimento,
