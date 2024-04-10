@@ -11,11 +11,7 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function MobileIndex() {
     const { data, error, mutate, isLoading } = useSWR(
-        "/api/getReunion",
-        fetcher,
-        {
-            refreshInterval: 1500,
-        }
+        "/api/getReunion"
     );
     const [assembleia, setAssembleia] = useState(null);
     const [clientes, setClientes] = useState([]);

@@ -1,6 +1,7 @@
 
+import { getServerSession } from 'next-auth';
 import prisma from '../../../lib/prisma'
-
+import { authOptions } from "../api/auth/[...nextauth]";
 export const config = {
     api: {
         bodyParser: {
@@ -10,6 +11,8 @@ export const config = {
 }
 
 export default async function PresenceAPI(req, res) {
+    const session = await getServerSession(req, res, authOptions);
+    console.log(session)
     const user = await req.body
     const result = await prisma.clientes.update({
         where: {
@@ -20,6 +23,7 @@ export default async function PresenceAPI(req, res) {
             hora: new Date(),
             foto: user.foto,
             nomeAdm: user.nomeAdm,
+            userId: session.user.id
         },
     })
     return res.json(result)

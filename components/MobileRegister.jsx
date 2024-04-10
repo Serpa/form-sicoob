@@ -7,10 +7,12 @@ import dayjs from "dayjs";
 import { MaskedInput } from "antd-mask-input";
 import WebcamCompChoise from './CameraChoice';
 const { Option } = Select;
+import { useRouter } from 'next/router';
 
 export default function MobileRegister({ assembleia }) {
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
+    const router = useRouter();
     const showDrawer = () => {
         setOpen(true);
     };
@@ -24,6 +26,8 @@ export default function MobileRegister({ assembleia }) {
                 values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
                 handleRegister(values, assembleia);
                 form.resetFields();
+                router.reload();
+                mutate
             } else {
                 handleRegister(values, assembleia);
                 form.resetFields();
