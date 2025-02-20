@@ -26,6 +26,3 @@ export default function Loader({ size = 'default', tip, fullscreen = false }) {
 
     return <Spin size={size} tip={tip} />;
 };
-
-// Cria uma variação de tela cheia pré-definida
-Loader.Fullscreen = () => <Loader fullscreen />;
