@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import useSWR from "swr";
 import RegisterModal from "@/components/Modal";
+import Loader from "@/components/LoadingComp";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { saveAs } from "file-saver";
@@ -297,7 +298,7 @@ export default function ClienteTable(props) {
     },
   ];
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loader />;
   return (
     <>
       <Table

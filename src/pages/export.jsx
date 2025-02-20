@@ -1,5 +1,6 @@
 import GetData from "components/GetData";
 import Template from "../../components/Template";
+import Loader from "../../components/LoadingComp";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { Button } from "antd";
@@ -61,7 +62,7 @@ export default function Doc() {
     };
   });
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loader />;
   return (
     <>
       <Head>

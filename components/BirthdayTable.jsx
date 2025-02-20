@@ -13,6 +13,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import { saveAs } from "file-saver";
 import dayjs from "dayjs";
+import Loader from "@/components/LoadingComp";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function BirthdayTable(props) {
@@ -261,7 +262,7 @@ export default function BirthdayTable(props) {
     }
   ];
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loader />;
   return (
     <>
       <Table

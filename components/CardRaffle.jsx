@@ -13,7 +13,6 @@ export default function CardRaffle(props) {
   const [tipoSorteio, setTipoSorteio] = useState('todos');
   const [loading, setLoading] = useState(false);
   const [ganhador, setGanhador] = useState(null);
-  const [associado, setAssociado] = useState(true);
   const { data, error, isLoading } = useSWR("/api/countPresence/" + props.assembleia?.value,
     fetcher
   );
