@@ -13,12 +13,14 @@ export default function MobileRegister({ assembleia }) {
     const [open, setOpen] = useState(false);
     const [form] = Form.useForm();
     const router = useRouter();
+    const [termsAccepted, setTermsAccepted] = useState(false);
     const showDrawer = () => {
         setOpen(true);
     };
     const onClose = () => {
         setOpen(false);
         form.resetFields();
+        setTermsAccepted(false)
     };
     const onFinish = (values) => {
         try {
@@ -31,6 +33,7 @@ export default function MobileRegister({ assembleia }) {
             } else {
                 handleRegister(values, assembleia);
                 form.resetFields();
+                setTermsAccepted(false)
             }
         } catch (error) {
 
@@ -185,11 +188,18 @@ export default function MobileRegister({ assembleia }) {
                         <Input />
                     </Form.Item>
 
+                    <Checkbox
+                        checked={termsAccepted}
+                        onChange={(e) => setTermsAccepted(e.target.checked)}
+                    >
+                        Declaro estar ciente e de acordo com a utilização dos meus dados pessoais pelo Sicoob epor expositores parceiros, para fins de participação em promoções, ações comerciais e de relacionamento.
+                    </Checkbox>
+
                     <Form.Item
                         className='flex justify-center'
                     >
                         {img && (
-                            <Button htmlType="submit" icon={<SaveOutlined />}>
+                            <Button htmlType="submit" icon={<SaveOutlined />} disabled={!termsAccepted}>
                                 Cadastrar
                             </Button>
                         )}

@@ -22,6 +22,7 @@ export default function Register() {
     }
   );
   const [assembleia, setAssembleia] = useState(null);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,6 +41,7 @@ export default function Register() {
   const onFinish = (values) => {
     values.dataNascimento = dayjs(values.dataNascimento).format("YYYY/MM/DD");
     handleRegister(values, assembleia);
+    setTermsAccepted(false)
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -199,10 +201,18 @@ export default function Register() {
                 <Input />
               </Form.Item>
 
+
+              <Checkbox
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              >
+                Declaro estar ciente e de acordo com a utilização dos meus dados pessoais pelo Sicoob epor expositores parceiros, para fins de participação em promoções, ações comerciais e de relacionamento.
+              </Checkbox>
+
               <Form.Item
               >
                 {img ? (
-                  <Button type="text" htmlType="submit" icon={<SaveOutlined />}>
+                  <Button type="text" htmlType="submit" icon={<SaveOutlined />} disabled={!termsAccepted}>
                     Cadastrar
                   </Button>
                 ) : null}
