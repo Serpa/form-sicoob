@@ -9,7 +9,6 @@ export default async function Raffle(req, res) {
         assembleiaId: { $oid: assembleiaId }
     };
 
-    // Ajusta o critério de match baseado no tipo de sorteio
     switch (tipoSorteio) {
         case 'associados':
             matchCriteria.associado = true;
@@ -18,7 +17,6 @@ export default async function Raffle(req, res) {
             matchCriteria.associado = false;
             break;
         case 'todos':
-            // Não precisa adicionar critério adicional para associado
             break;
         default:
             return res.status(400).json({ error: 'Tipo de sorteio inválido' });
@@ -31,18 +29,18 @@ export default async function Raffle(req, res) {
                 { $sample: { size: 1 } }
             ],
         });
-
-        if (result.length) {
+        
+        if (result && result.length > 0) {
             const updateRaffle = await prisma.clientes.update({
                 where: {
                     id: result[0]._id.$oid,
                 },
                 data: {
                     sorteado: true,
-                    dataSorteio: new Date()
+                    dataSorteio: new Date(),
                 },
             });
-            return res.status(200).json(result);
+            return res.status(200).json(result[0]);
         } else {
             return res.status(404).json({ message: 'Nenhum cliente encontrado para o sorteio.' });
         }

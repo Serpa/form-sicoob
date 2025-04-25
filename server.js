@@ -6,7 +6,7 @@ const fs = require("fs");
 const ip = require('ip');
 const hostname = ip.address();
 const port = 3000
-const dev = false;
+const dev = true;
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 const httpsOptions = {
@@ -16,7 +16,7 @@ const httpsOptions = {
 
 const serveStatic = (req, res) => {
     const parsedUrl = parse(req.url, true);
-    const filePath = path.join(process.cwd(), 'uploads', parsedUrl.pathname);
+    const filePath = path.join(process.cwd(), 'public/uploads', parsedUrl.pathname);
 
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {

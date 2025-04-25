@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import { useSnackbar } from "notistack";
-import { useSWRConfig } from "swr";
+import { v1 as uuidv1 } from 'uuid';
 
 export const ClienteContext = createContext({});
 
@@ -24,7 +24,7 @@ export const ClienteProvider = ({ children }) => {
     }
 
     const handleSubmit = async (cliente, assembleia, adm = null) => {
-        const fileData = { base64: img, fileName: cliente.numeroCPF_CNPJ, assembleia: assembleia.label };
+        const fileData = { base64: img, fileName: uuidv1(), assembleia: assembleia.label };
         try {
             const result = await axios.post("api/upload", fileData);
             const res = await axios.post(`/api/presence`, { id: cliente.id, foto: result.data.fileName, nomeAdm: adm });
@@ -38,7 +38,7 @@ export const ClienteProvider = ({ children }) => {
 
     const handleRegister = async (cliente, assembleia) => {
         try {
-            const fileData = { base64: img, fileName: cliente.numeroCPF_CNPJ, assembleia: assembleia.label };
+            const fileData = { base64: img, fileName: uuidv1(), assembleia: assembleia.label };
             const result = await axios.post("api/upload", fileData);
             const res = await axios.post(`/api/register`, {
                 ...cliente, foto: result.data.fileName, presente: true, assembleiaId: assembleia.value,

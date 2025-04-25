@@ -145,15 +145,24 @@ echo #snmp:
 
 echo Arquivo mongod.conf criado em %arquivo_destino%
 :: Update the 3.4 if you have another version
-cd C:\Program Files\MongoDB\Server\7.0\bin
+cd C:\Program Files\MongoDB\Server\8.0\bin
 ::set default port variable
 ::set port=27017
+:: Rodar
+:: mongosh --port 27017
+:: depois
+::
+::
+::
+::
+::
+::
 
 :: add this line at the end of the ~mongod.exe to write the log on a separated file
 :: --logpath C:\mongodb\data\log\mongo.log
-start cmd /k mongod --dbpath C:\data0\ -port 27017 --replSet "testers0”
-start cmd /k mongod --dbpath C:\data1\ -port 27018 --replSet "testers0”
-start cmd /k mongod --dbpath C:\data2\ -port 27019 --replSet "testers0”
+start cmd /k mongod --dbpath C:\data0\ -port 27017 --replSet "testers0"
+start cmd /k mongod --dbpath C:\data1\ -port 27018 --replSet "testers0"
+start cmd /k mongod --dbpath C:\data2\ -port 27019 --replSet "testers0"
 ::mongosh rs.add({_id:1, host: "localhost:27018"}) rs.add({_id:2, host: "localhost:27019"})
 cd %~dp0
 start cmd /k node server.js
