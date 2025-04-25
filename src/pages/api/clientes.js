@@ -10,48 +10,66 @@ export const config = {
 }
 
 export default async function ClientesAPI(req, res) {
-
     try {
-        const assembleiaCreate = await prisma.Assembleia.create({
-            data: req.body.assembleia,
-        })
-        const clientes = req.body.clientes.map((cliente) => {
-            return {
+        const result = await prisma.$transaction(async (tx) => {
+            // Criação da assembleia
+            const assembleiaCreate = await tx.Assembleia.create({
+                data: req.body.assembleia,
+            });
+
+            // Preparar dados dos clientes
+            const clientes = req.body.clientes.map((cliente) => ({
                 nomeCliente: cliente.nomeCliente,
                 nomeGerente: cliente.nomeGerente,
                 dataNascimento: dayjs(cliente.dataNascimento).toDate(),
-                numeroCPF_CNPJ: cliente.numeroCPF_CNPJ,
+                numeroCPF_CNPJ: cliente.numeroCPF_CNPJ.toString(),
                 numeroPA: parseInt(cliente.numeroPA),
                 assembleiaId: assembleiaCreate.id,
                 sorteado: false,
                 associado: true,
-            }
+            }));
 
-        })
-        const clientesCreate = await prisma.clientes.createMany({
-            data: clientes
-        })
+            // Criar clientes
+            await tx.clientes.createMany({
+                data: clientes
+            });
 
-        const clientesFind = await prisma.clientes.findMany({
-            where: {
-                assembleiaId: assembleiaCreate.id
-            }
-        })
+            // Buscar clientes recém-criados
+            const clientesFind = await tx.clientes.findMany({
+                where: {
+                    assembleiaId: assembleiaCreate.id
+                }
+            });
 
-        const adms = req.body.adms.map((adm) => {
-            let cliente = clientesFind.filter((cliente) => cliente.numeroCPF_CNPJ === adm.numeroCPF_CNPJ || cliente.nomeCliente === adm.nomeCliente)
-            delete adm.numeroCPF_CNPJ
-            delete adm.nomeCliente
+            // Preparar dados dos administradores com base nos clientes encontrados
+            const adms = req.body.adms.map((adm) => {
+                const cliente = clientesFind.find((c) =>
+                    c.numeroCPF_CNPJ === adm.numeroCPF_CNPJ || c.nomeCliente === adm.nomeCliente
+                );
+                delete adm.numeroCPF_CNPJ;
+                delete adm.nomeCliente;
+
+                return {
+                    ...adm,
+                    clienteId: cliente?.id
+                };
+            });
+
+            // Criar administradores
+            await tx.Administradores.createMany({
+                data: adms
+            });
+
             return {
-                ...adm,
-                clienteId: cliente[0]?.id
-            }
-        })
-        const administradoresCreate = await prisma.Administradores.createMany({
-            data: adms
-        })
-        return res.json(clientesCreate, administradoresCreate, { status: 200 })
+                assembleia: assembleiaCreate,
+                clientes: clientesFind,
+                administradores: adms
+            };
+        });
+
+        return res.status(200).json(result);
     } catch (error) {
-        return res.json(error, { status: 500 })
+        console.error(error);
+        return res.status(500).json({ error: "Erro ao processar os dados", details: error });
     }
 }
